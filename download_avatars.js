@@ -1,7 +1,13 @@
 var request = require('request');
 var secrets = require('./secrets.js')
+var owner = process.argv[2]
+var repos = process.argv[3]
 var fs = require('fs');
 //how do i require the secrets.js file?
+
+if (repos === undefined || owner === undefined) {
+  throw Error('ERROR must include owner and name!!!!')
+}
 
 function getRepoContributors(repoOwner, repoName, cb) {
   var options = {
@@ -21,7 +27,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
 //loop over array and print each avatar url
 // .avatar_url, array is the result
 
-getRepoContributors("jquery", "jquery", function(err, result) {
+getRepoContributors(owner, repos, function(err, result) {
   console.log("Errors:", err);
     for (i = 0; i < result.length; i++){
       console.log(result[i].avatar_url)
@@ -49,6 +55,7 @@ request.get(url)
 
 
 console.log('Welcome to the GitHub Avatar Downloader!');
+
 downloadImageByURL("https://avatars2.githubusercontent.com/u/2741?v=3&s=466", "avatars/kvirani.jpg")
 
 
